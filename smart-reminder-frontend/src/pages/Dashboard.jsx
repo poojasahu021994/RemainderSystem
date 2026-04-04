@@ -47,7 +47,7 @@ export default function Dashboard() {
 
         try {
             await axios.post(
-                "http://127.0.0.1:8000/api/reminders/",
+                "https://remainderssystem.onrender.com/api/reminders/",
                 {
                     title: title,
                     reminder_time: datetime,
