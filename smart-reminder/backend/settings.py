@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5lg@u09*bs@jgnrvp3#(nktd!w8b%z!z-!bo^4j*38#5)p@h+c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -140,21 +140,22 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
 }
 
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
+# CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
 
 
 
-CELERY_BEAT_SCHEDULE = {
-    'check-reminders-every-minute': {
-        'task': 'reminders.tasks.check_reminders',
-        'schedule': crontab(minute='*'),
-    },
+# CELERY_BEAT_SCHEDULE = {
+#     'check-reminders-every-minute': {
+#         'task': 'reminders.tasks.check_reminders',
+#         'schedule': crontab(minute='*'),
+#     },
     
-}
+# }
 
 CORS_ALLOW_ALL_ORIGINS = True
 
 MEDIA_URL = '/reminder_audios/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'reminder_audios')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
