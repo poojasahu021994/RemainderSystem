@@ -24,7 +24,7 @@ export default function Dashboard() {
     const fetchReminders = async () => {
         try {
             const res = await axios.get(
-                "http://127.0.0.1:8000/api/reminders/",
+                "https://remainderssystem.onrender.com/api/reminders/",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
