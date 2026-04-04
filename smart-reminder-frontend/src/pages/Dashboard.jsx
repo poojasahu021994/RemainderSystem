@@ -78,7 +78,7 @@ export default function Dashboard() {
     const handleUpdateReminder = async () => {
         try {
             await axios.put(
-                `http://127.0.0.1:8000/api/reminders/${editingId}/`,
+                `https://remainderssystem.onrender.com/api/reminders/${editingId}/`,
                 {
                     title: title,
                     reminder_time: datetime,
@@ -109,7 +109,7 @@ export default function Dashboard() {
     const handleDelete = async (id) => {
         try {
             await axios.delete(
-                `http://127.0.0.1:8000/api/reminders/${id}/`,
+                `https://remainderssystem.onrender.com/api/reminders/${id}/`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
