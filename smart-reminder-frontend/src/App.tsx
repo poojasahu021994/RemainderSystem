@@ -3,6 +3,7 @@ import Register from "./pages/Register"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
 import ProtectedRoute from "./ProtectedRoute"
+import NotificationPage from "./pages/NotificationPage"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           </ProtectedRoute>
         } 
       />
+      <Route path="/notificationPage" element={<NotificationPage />} />
     </Routes>
   )
 }
