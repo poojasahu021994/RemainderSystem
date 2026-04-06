@@ -48,40 +48,21 @@ class ReminderDetailView(generics.RetrieveUpdateDestroyAPIView):
             print("Audio file deleted successfully.")
 
         instance.delete()
+    
     def perform_update(self, serializer):
+
         reminder = serializer.save()
 
-        try:
-            os.makedirs('reminder_audios', exist_ok=True)
+        audio_path = os.path.join('reminder_audios', f"{reminder.id}.mp3")
 
-            audio_path = os.path.join('reminder_audios', f"{reminder.id}.mp3")
-
-            if os.path.exists(audio_path):
-                os.remove(audio_path)
-
-            tts = gTTS(reminder.title, lang='en')
-            tts.save(audio_path)
-
-            print("Audio updated")
-
-        except Exception as e:
-            print("gTTS ERROR:", e)    
-    
-    
-    # def perform_update(self, serializer):
-
-    #     reminder = serializer.save()
-
-    #     audio_path = os.path.join('reminder_audios', f"{reminder.id}.mp3")
-
-    #     #delete old audio file if it exists
-    #     if os.path.exists(audio_path):
-    #         os.remove(audio_path)
-    #         print("Old audio file deleted successfully.")
+        #delete old audio file if it exists
+        if os.path.exists(audio_path):
+            os.remove(audio_path)
+            print("Old audio file deleted successfully.")
 
 
-    #     # Generate new audio file using gTTS
-    #     tts = gTTS(reminder.title, lang='en')
-    #     tts.save(audio_path)
+        # Generate new audio file using gTTS
+        tts = gTTS(reminder.title, lang='en')
+        tts.save(audio_path)
 
-    #     print("New audio file saved successfully.")
+        print("New audio file saved successfully.")
