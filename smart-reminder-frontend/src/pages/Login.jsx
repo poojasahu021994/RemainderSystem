@@ -16,7 +16,7 @@ const res = await axios.post(
 "https://remainderssystem.onrender.com/api/login/",
 {username,password}
 )
-
+console.log("SUCCESS:", res.data)
 localStorage.setItem("token",res.data.access)
 
 navigate("/dashboard")
@@ -24,6 +24,9 @@ navigate("/dashboard")
 }catch{
 
 alert("Invalid Credentials")
+
+    console.log("FULL ERROR:", err)
+    console.log("BACKEND ERROR:", err.response?.data)
 
 }
 
