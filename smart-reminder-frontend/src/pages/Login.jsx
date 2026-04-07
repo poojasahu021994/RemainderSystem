@@ -28,13 +28,11 @@ localStorage.setItem("token",res.data.access)
 
 navigate("/dashboard")
 
-}catch{
+}catch(err){
+  alert("Invalid Credentials")
 
-alert("Invalid Credentials")
-
-    console.log("FULL ERROR:", err)
-    console.log("BACKEND ERROR:", err.response?.data)
-
+  console.log("FULL ERROR:", err)
+  console.log("BACKEND ERROR:", err.response?.data)
 }
 
 }
