@@ -8,7 +8,7 @@ function NotificationPage() {
     const interval = setInterval(async () => {
       try {
         const res = await axios.get(
-          "https://remainderssystem.onrender.com/api/notifications/",
+          "https://remainderssystem.onrender.com/api/reminders/notifications/",
           {
             headers: {
               Authorization: `Bearer YOUR_TOKEN`
