@@ -13,7 +13,7 @@ const handleLogin = async () =>{
 try{
 
 const res = await axios.post(
-"hhttps://remainderssystem.onrender.com/api/login/",
+"https://remainderssystem.onrender.com/api/login/",
 {username,password}
 )
 
