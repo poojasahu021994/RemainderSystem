@@ -10,6 +10,13 @@ const navigate = useNavigate()
 
 const handleLogin = async () =>{
 
+      console.log("Sending:", username, password)
+
+  if (!username || !password) {
+    alert("Please fill all fields")
+    return
+  }
+
 try{
 
 const res = await axios.post(
