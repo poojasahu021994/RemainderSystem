@@ -8,32 +8,21 @@ from .models import Reminder
 def check_reminders():
 
     now = timezone.now()
-    print("NOW:", now)
 
     reminders = Reminder.objects.filter(
-        reminder_time__lte=now
+        reminder_time__lte=now,
+        is_triggered=False
     )
 
     for reminder in reminders:
 
-        print("Processing:", reminder.title)
+        reminder.is_triggered = True
 
-        # 🔁 Repeat daily reminder
         if reminder.repeat_daily:
-
-            reminder.is_triggered = True
-            reminder.save()
-
-            # next day ke liye reset
-            reminder.reminder_time = reminder.reminder_time + timedelta(days=1)
+            reminder.reminder_time += timedelta(days=1)
             reminder.is_triggered = False
-            reminder.save()
 
-        # 🔹 One-time reminder
-        elif not reminder.is_triggered:
-
-            reminder.is_triggered = True
-            reminder.save()
+        reminder.save()
 
 # from celery import shared_task
 # from django.utils import timezone
