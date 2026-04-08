@@ -106,7 +106,7 @@ const [password,setPassword]=useState("")
 const navigate = useNavigate()
 
 const handleLogin = async () =>{
-    
+
     console.log("Sending:", username, password)
 
 try{
@@ -120,11 +120,21 @@ localStorage.setItem("token",res.data.access)
 
 navigate("/dashboard")
 
-}catch{
+}catch (err) {
 
-alert("Invalid Credentials")
+    console.log("FULL ERROR OBJECT:", err)
 
-}
+    if (err.response) {
+      console.log("BACKEND DATA:", err.response.data)
+      alert(JSON.stringify(err.response.data))
+    } else if (err.request) {
+      console.log("NO RESPONSE RECEIVED:", err.request)
+      alert("Server not responding")
+    } else {
+      console.log("ERROR MESSAGE:", err.message)
+      alert(err.message)
+    }
+  }
 
 }
 
