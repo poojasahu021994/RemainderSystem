@@ -47,7 +47,7 @@ function NotificationPage() {
       } catch (err) {
         console.log("Notification error:", err);
       }
-    }, 5000); // 5 sec polling
+    }, 15000); // 5 sec polling
 
     return () => clearInterval(interval);
 
