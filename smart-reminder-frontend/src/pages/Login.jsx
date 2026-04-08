@@ -106,6 +106,8 @@ const [password,setPassword]=useState("")
 const navigate = useNavigate()
 
 const handleLogin = async () =>{
+    
+    console.log("Sending:", username, password)
 
 try{
 
