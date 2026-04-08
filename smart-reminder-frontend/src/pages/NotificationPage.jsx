@@ -14,7 +14,7 @@ function NotificationPage() {
       try {
         const res = await axios.get(
           "https://remainderssystem.onrender.com/api/reminders/notifications/",
-         
+
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -33,17 +33,26 @@ function NotificationPage() {
             // const audio = new Audio("https://www.soundjay.com/buttons/sounds/beep-01a.mp3");
             // audio.play().catch(() => {});
 
-            try { 
-               await axios.get("https://api.thingspeak.com/update", 
-                { params: { api_key: "IC5UPBA86AD65CZP", 
-                  field1: reminder.title, 
-                  field2: new Date(reminder.reminder_time).toLocaleString(), 
-                  field3: reminder.repeat_daily ? 1 : 0 } }); } catch (err) 
-                  { console.log("ThingSpeak error:", err); }
+            try {
+              const response = await axios.get("https://api.thingspeak.com/update",
+                {
+                  params: {
+                    api_key: "IC5UPBA86AD65CZP",
+                    field1: reminder.title,
+                    field2: new Date(reminder.reminder_time).toLocaleString(),
+                    field3: reminder.repeat_daily ? 1 : 0
+                  }
+                });
+            } catch (err) { console.log("ThingSpeak error:", err); }
           }
-
+          console.log("ThingSpeak response:", response.data);
         });
-
+        // 🔥 IMPORTANT CHECK
+        if (response.data === 0) {
+          console.log("❌ ThingSpeak rejected data");
+        } else {
+          console.log("✅ Data sent successfully, entry:", response.data);
+        }
       } catch (err) {
         console.log("Notification error:", err);
       }
