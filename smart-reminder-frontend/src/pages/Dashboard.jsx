@@ -137,13 +137,27 @@ export default function Dashboard() {
                     <h2 className="text-3xl font-bold">
                         Smart Reminder
                     </h2>
+ <div className="flex gap-2">
+        <button
+            onClick={() => navigate("/notificationPage")}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+        >
+            Notifications 🔔
+        </button>
 
-                    <button
+        <button
+            onClick={handleLogout}
+            className="bg-red-500 text-white px-4 py-2 rounded-lg"
+        >
+            Logout
+        </button>
+    </div>
+                    {/* <button
                         onClick={handleLogout}
                         className="bg-red-500 text-white px-4 py-2 rounded-lg"
                     >
                         Logout
-                    </button>
+                    </button> */}
                 </div>
 
                 {/* Form */}
