@@ -14,7 +14,7 @@ function NotificationPage() {
       try {
         const res = await axios.get(
           "https://remainderssystem.onrender.com/api/reminders/notifications/",
-          "https://api.thingspeak.com/update?api_key=IC5UPBA86AD65CZP&field1=100",
+         
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -22,7 +22,7 @@ function NotificationPage() {
           }
         );
 
-        res.data.forEach(reminder => {
+        res.data.forEach(async (reminder) => {
 
           if (!shownIds.current.has(reminder.id)) {
 
@@ -30,8 +30,16 @@ function NotificationPage() {
             shownIds.current.add(reminder.id);
 
             // 🔊 SOUND ALERT
-            const audio = new Audio("https://www.soundjay.com/buttons/sounds/beep-01a.mp3");
-            audio.play().catch(() => {});
+            // const audio = new Audio("https://www.soundjay.com/buttons/sounds/beep-01a.mp3");
+            // audio.play().catch(() => {});
+
+            try { 
+               await axios.get("https://api.thingspeak.com/update", 
+                { params: { api_key: "IC5UPBA86AD65CZP", 
+                  field1: reminder.title, 
+                  field2: new Date(reminder.reminder_time).toLocaleString(), 
+                  field3: reminder.repeat_daily ? 1 : 0 } }); } catch (err) 
+                  { console.log("ThingSpeak error:", err); }
           }
 
         });
