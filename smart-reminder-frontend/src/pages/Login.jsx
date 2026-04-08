@@ -105,37 +105,37 @@ const [username,setUsername]=useState("")
 const [password,setPassword]=useState("")
 const navigate = useNavigate()
 
-const handleLogin = async () =>{
+const handleLogin = async () => {
 
-    console.log("Sending:", username, password)
+  console.log("USERNAME:", username)
+  console.log("PASSWORD:", password)
 
-try{
-
-const res = await axios.post(
-"https://remainderssystem.onrender.com/api/login/",
-{username,password}
-)
-
-localStorage.setItem("token",res.data.access)
-
-navigate("/dashboard")
-
-}catch (err) {
-
-    console.log("FULL ERROR OBJECT:", err)
-
-    if (err.response) {
-      console.log("BACKEND DATA:", err.response.data)
-      alert(JSON.stringify(err.response.data))
-    } else if (err.request) {
-      console.log("NO RESPONSE RECEIVED:", err.request)
-      alert("Server not responding")
-    } else {
-      console.log("ERROR MESSAGE:", err.message)
-      alert(err.message)
-    }
+  if (!username || !password) {
+    alert("Enter username and password")
+    return
   }
 
+  try {
+    const res = await axios.post(
+      "https://remainderssystem.onrender.com/api/login/",
+      {
+        username: username.trim(),
+        password: password.trim()
+      }
+    )
+
+    console.log("SUCCESS:", res.data)
+
+    localStorage.setItem("token", res.data.access)
+
+    navigate("/dashboard")
+
+  } catch (err) {
+
+    console.log("ERROR:", err.response?.data)
+
+    alert(JSON.stringify(err.response?.data))
+  }
 }
 
 return(
