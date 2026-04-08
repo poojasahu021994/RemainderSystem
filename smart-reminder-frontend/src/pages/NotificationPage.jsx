@@ -14,6 +14,7 @@ function NotificationPage() {
       try {
         const res = await axios.get(
           "https://remainderssystem.onrender.com/api/reminders/notifications/",
+          "https://api.thingspeak.com/update?api_key=IC5UPBA86AD65CZP&field1=100",
           {
             headers: {
               Authorization: `Bearer ${token}`
