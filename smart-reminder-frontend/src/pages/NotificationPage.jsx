@@ -38,8 +38,8 @@ function NotificationPage() {
                 {
                   params: {
                     api_key: "IC5UPBA86AD65CZP",
-                    field1: reminder.title,
-                    field2: new Date(reminder.reminder_time).toLocaleString(),
+                    field1: reminder.title.substring(0, 50), // short text
+                    field2: new Date(reminder.reminder_time).getTime(), // number bhejo
                     field3: reminder.repeat_daily ? 1 : 0
                   }
                 });
