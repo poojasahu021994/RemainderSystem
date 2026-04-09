@@ -23,11 +23,12 @@ function NotificationPage() {
         );
 
         res.data.forEach(async (reminder) => {
+          console.log("ThingSpeak call triggered");
 
-          if (!shownIds.current.has(reminder.id)) {
+          // if (!shownIds.current.has(reminder.id)) {
 
-            setNotifications(prev => [reminder, ...prev]);
-            shownIds.current.add(reminder.id);
+            // setNotifications(prev => [reminder, ...prev]);
+            // shownIds.current.add(reminder.id);
 
             // 🔊 SOUND ALERT
             // const audio = new Audio("https://www.soundjay.com/buttons/sounds/beep-01a.mp3");
@@ -38,26 +39,20 @@ function NotificationPage() {
                 {
                   params: {
                     api_key: "IC5UPBA86AD65CZP",
-                    field1: reminder.title.substring(0, 50), // short text
-                    field2: new Date(reminder.reminder_time).getTime(), // number bhejo
+                    field1: reminder.title.substring(0, 50),
+                    field2: new Date(reminder.reminder_time).getTime(),
                     field3: reminder.repeat_daily ? 1 : 0
                   }
                 });
-                 console.log("ThingSpeak response:", response.data);
-                 
-                // 🔥 IMPORTANT CHECK
-        if (response.data === 0) {
-          console.log("❌ ThingSpeak rejected data");
-        } else {
-          console.log("✅ Data sent successfully, entry:", response.data);
-        }
-            } catch (err) { 
-              console.log("ThingSpeak error:", err); 
+              console.log("ThingSpeak response:", response.data);
+
+            } catch (err) {
+              console.log("ThingSpeak error:", err);
             }
-          }
-         
+          // }
+
         });
-        
+
       } catch (err) {
         console.log("Notification error:", err);
       }
