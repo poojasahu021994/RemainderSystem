@@ -73,9 +73,28 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from datetime import timedelta
 from django.utils import timezone
+import requests
 
 from .models import Reminder
 from .serializers import ReminderSerializer
+
+
+# ✅ ThingSpeak function
+def send_to_thingspeak(reminder):
+    url = "https://api.thingspeak.com/update"
+
+    params = {
+        "api_key": "IC5UPBA86AD65CZP",
+        "field1": reminder.title[:50],
+        "field2": int(reminder.reminder_time.timestamp()),
+        "field3": 1 if reminder.repeat_daily else 0
+    }
+
+    try:
+        response = requests.get(url, params=params)
+        print("ThingSpeak response:", response.text)
+    except Exception as e:
+        print("ThingSpeak error:", e)
 
 
 # List + Create
@@ -108,7 +127,7 @@ class ReminderDetailView(generics.RetrieveUpdateDestroyAPIView):
         print("Reminder updated:", reminder.title)
 
 
-# 🔔 NEW: Notification API
+# 🔔 Notification API (FINAL FIXED)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_notifications(request):
@@ -117,23 +136,25 @@ def get_notifications(request):
 
     reminders = Reminder.objects.filter(
         user=request.user,
-        reminder_time__lte=now
+        reminder_time__lte=now,
+        is_triggered=False   # 🔥 VERY IMPORTANT
     )
 
     serializer = ReminderSerializer(reminders, many=True)
 
     for reminder in reminders:
 
-        # mark as triggered
+        # 🔥 ThingSpeak call यहीं
+        send_to_thingspeak(reminder)
+
         reminder.is_triggered = True
 
         if reminder.repeat_daily:
-            # next day ke liye set
             reminder.reminder_time += timedelta(days=1)
-
-            # reset for next cycle
             reminder.is_triggered = False
 
         reminder.save()
+
+    print("Notifications sent:", len(reminders))
 
     return Response(serializer.data)

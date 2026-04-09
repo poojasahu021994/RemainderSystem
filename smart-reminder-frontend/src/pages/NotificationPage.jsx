@@ -10,11 +10,15 @@ function NotificationPage() {
 
     const token = localStorage.getItem("token");
 
+    console.log("Component mounted");
+
     const interval = setInterval(async () => {
+
+      console.log("⏱ Checking notifications...");
+
       try {
         const res = await axios.get(
           "https://remainderssystem.onrender.com/api/reminders/notifications/",
-
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -22,41 +26,28 @@ function NotificationPage() {
           }
         );
 
-        res.data.forEach(async (reminder) => {
-          console.log("ThingSpeak call triggered");
+        console.log("📦 API DATA:", res.data);
 
-          // if (!shownIds.current.has(reminder.id)) {
+        res.data.forEach((reminder) => {
 
-            // setNotifications(prev => [reminder, ...prev]);
-            // shownIds.current.add(reminder.id);
+          if (!shownIds.current.has(reminder.id)) {
 
-            // 🔊 SOUND ALERT
-            // const audio = new Audio("https://www.soundjay.com/buttons/sounds/beep-01a.mp3");
-            // audio.play().catch(() => {});
+            setNotifications(prev => [reminder, ...prev]);
+            shownIds.current.add(reminder.id);
 
-            try {
-              const response = await axios.get("https://api.thingspeak.com/update",
-                {
-                  params: {
-                    api_key: "IC5UPBA86AD65CZP",
-                    field1: reminder.title.substring(0, 50),
-                    field2: new Date(reminder.reminder_time).getTime(),
-                    field3: reminder.repeat_daily ? 1 : 0
-                  }
-                });
-              console.log("ThingSpeak response:", response.data);
+            console.log("🔔 New Notification:", reminder.title);
 
-            } catch (err) {
-              console.log("ThingSpeak error:", err);
-            }
-          // }
-
+            // 🔊 SOUND ALERT (optional)
+            const audio = new Audio("https://www.soundjay.com/buttons/sounds/beep-01a.mp3");
+            audio.play().catch(() => {});
+          }
         });
 
       } catch (err) {
-        console.log("Notification error:", err);
+        console.log("❌ Notification error:", err);
       }
-    }, 15000); // 5 sec polling
+
+    }, 15000); // 15 sec
 
     return () => clearInterval(interval);
 
