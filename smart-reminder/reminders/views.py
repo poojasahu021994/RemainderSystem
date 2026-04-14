@@ -79,12 +79,12 @@ from .models import Reminder
 from .serializers import ReminderSerializer
 
 
-# ✅ ThingSpeak function
+#  ThingSpeak function
 def send_to_thingspeak(reminder):
     url = "https://api.thingspeak.com/update"
 
     params = {
-        "api_key": "IC5UPBA86AD65CZP",
+        "api_key": "Y9K50LWYT0XB7WI9",
         "field1": reminder.title[:50],
         "field2": int(reminder.reminder_time.timestamp()),
         "field3": 1 if reminder.repeat_daily else 0
@@ -137,7 +137,7 @@ def get_notifications(request):
     reminders = Reminder.objects.filter(
         user=request.user,
         reminder_time__lte=now,
-        is_triggered=False   # 🔥 VERY IMPORTANT
+        is_triggered=False  
     )
 
     serializer = ReminderSerializer(reminders, many=True)

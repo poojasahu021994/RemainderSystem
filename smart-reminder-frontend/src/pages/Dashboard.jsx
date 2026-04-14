@@ -60,7 +60,7 @@ export default function Dashboard() {
                 }
             )
 
-            alert("Reminder Created ✅")
+            alert("Reminder Created ")
 
             setTitle("")
             setDatetime("")
@@ -70,7 +70,7 @@ export default function Dashboard() {
 
         } catch (error) {
             console.log(error)
-            alert("Create Failed ❌")
+            alert("Create Failed ")
         }
     }
 
