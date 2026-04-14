@@ -15,7 +15,7 @@ const navigate = useNavigate()
 const handleRegister = async () => {
 
 if(password !== confirmPassword){
-alert("Passwords do not match ❌")
+alert("Passwords do not match")
 return
 }
 
@@ -31,13 +31,13 @@ password
 }
 )
 
-alert("Account Created Successfully ✅")
+alert("Account Created Successfully")
 
 navigate("/")
 
 }catch{
 
-alert("Registration Failed ❌")
+alert("Registration Failed")
 
 }
 

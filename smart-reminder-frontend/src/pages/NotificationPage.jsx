@@ -14,7 +14,7 @@ function NotificationPage() {
 
     const interval = setInterval(async () => {
 
-      console.log("⏱ Checking notifications...");
+      console.log("Checking notifications...");
 
       try {
         const res = await axios.get(
@@ -26,7 +26,7 @@ function NotificationPage() {
           }
         );
 
-        console.log("📦 API DATA:", res.data);
+        console.log("API DATA:", res.data);
 
         res.data.forEach((reminder) => {
 
@@ -35,16 +35,16 @@ function NotificationPage() {
             setNotifications(prev => [reminder, ...prev]);
             shownIds.current.add(reminder.id);
 
-            console.log("🔔 New Notification:", reminder.title);
+            console.log("New Notification:", reminder.title);
 
-            // 🔊 SOUND ALERT (optional)
+            //  SOUND ALERT (optional)
             const audio = new Audio("https://www.soundjay.com/buttons/sounds/beep-01a.mp3");
             audio.play().catch(() => {});
           }
         });
 
       } catch (err) {
-        console.log("❌ Notification error:", err);
+        console.log("Notification error:", err);
       }
 
     }, 15000); // 15 sec
