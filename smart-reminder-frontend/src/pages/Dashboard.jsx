@@ -91,7 +91,6 @@ export default function Dashboard() {
                 }
             )
 
-            alert("Reminder Updated ✅")
             alert("Reminder Updated")
 
             setEditingId(null)
@@ -102,7 +101,6 @@ export default function Dashboard() {
 
         } catch (error) {
             console.log(error)
-            alert("Update Failed ❌")
             alert("Update Failed")
         }
     }
@@ -128,7 +126,6 @@ export default function Dashboard() {
     }
 
 
-    
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
@@ -140,27 +137,6 @@ export default function Dashboard() {
                     <h2 className="text-3xl font-bold">
                         Smart Reminderrrr
                     </h2>
- <div className="flex gap-2">
-        <button
-            onClick={() => navigate("/notificationPage")}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-        >
-            Notifications 🔔
-        </button>
-
-        <button
-            onClick={handleLogout}
-            className="bg-red-500 text-white px-4 py-2 rounded-lg"
-        >
-            Logout
-        </button>
-    </div>
-                    {/* <button
-                        onClick={handleLogout}
-                        className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                    >
-                        Logout
-                    </button> */}
                     <div className="flex gap-2">
                         <button
                             onClick={() => navigate("/notificationPage")}
@@ -264,8 +240,6 @@ export default function Dashboard() {
                                 <p className="text-sm mt-1">
                                     Repeat:
                                     <span className={`px-2 py-1 text-xs rounded-full ${reminder.repeat_daily
-                                            ? "bg-blue-100 text-blue-700"
-                                            : "bg-gray-200 text-gray-700"
                                         ? "bg-blue-100 text-blue-700"
                                         : "bg-gray-200 text-gray-700"
                                         }`}>
